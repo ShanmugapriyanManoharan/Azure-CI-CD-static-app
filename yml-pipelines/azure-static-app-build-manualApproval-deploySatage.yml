@@ -29,15 +29,15 @@ stages:
   - job: waitForValidation
     displayName: Wait for external validation  
     pool: server    
-    timeoutInMinutes: 10 # job times out in 3 days
+    timeoutInMinutes: 10 # job times out in 10 mins --> standard: we can give maximum of 3 days
     steps:   
-    - task: ManualValidation@0
-      timeoutInMinutes: 5 # task times out in 1 day
+    - task: ManualValidation@0 # @0 --> represents version
+      timeoutInMinutes: 5 # task times out in 5 minutes
       inputs:
-        notifyUsers: |
-          03sarath@gmail.com
+        notifyUsers: | # mention our email address to get the notification
+          shanshu2610@gmail.com 
         instructions: 'Please validate the build configuration and resume'
-        onTimeout: 'resume'
+        onTimeout: 'resume' # to automatically approve when not approved within the timeout (let's say 3 / 10 days)
 
 - stage: DeployToStaging
   displayName: Deploy to Staging Stage
